@@ -1,0 +1,60 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    font-weight: bold;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+
+/* Улучшение дизайна карточек */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Скрывает лишние части изображения */
+}
+
+.card-img-top {
+    transition: transform 0.3s ease; /* Анимация при наведении */
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.1); /* Увеличиваем изображение при наведении */
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #6c757d;
+}
+
+.card-link {
+    display: block;
+    margin-top: 10px;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.brand-logo {
+    max-height: 80px;
+    object-fit: contain;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 10px 0;
+}

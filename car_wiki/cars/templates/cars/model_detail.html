@@ -1,0 +1,46 @@
+{% extends "cars/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">{{ model.brand.name }} {{ model.name }} ({{ model.year_released }})</h2>
+
+    <!-- Контейнер для изображения и текста -->
+    <div class="row align-items-start">
+        <div class="col-md-6">
+            {% if model.image %}
+                <img src="{{ model.image.url }}" alt="{{ model.name }}" class="img-fluid mb-3" style="max-height: 400px; object-fit: cover;">
+            {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                    <small class="text-muted">Нет изображения</small>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">История</h5>
+                    <p class="card-text">{{ model.history }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Почему стал культовым</h5>
+                    <p class="card-text">{{ model.why_cult }}</p>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Ценность</h5>
+                    <p class="card-text">{{ model.value }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'model_list' model.brand.id %}" class="btn btn-outline-secondary mt-3">← Назад к моделям {{ model.brand.name }}</a>
+</div>
+{% endblock %}

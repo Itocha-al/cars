@@ -1,0 +1,38 @@
+{% extends "cars/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mb-4">
+    {% if brand.logo %}
+        <img src="{{ brand.logo.url }}" alt="{{ brand.name }}" class="brand-logo" style="max-height: 80px; object-fit: contain;">
+    {% else %}
+        <h3>{{ brand.name }}</h3>
+    {% endif %}
+    <h2 class="mb-4">Культовые модели</h2>
+</div>
+
+<div class="row">
+    {% for model in models %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if model.image %}
+                    <img src="{{ model.image.url }}" class="card-img-top" alt="{{ model.name }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <small class="text-muted">Нет изображения</small>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ model.name }}</h5>
+                    <p class="card-text text-muted">{{ model.year_released }} год</p>
+                    <a href="{% url 'model_detail' model.id %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Модели пока не добавлены.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'brand_list' %}" class="btn btn-outline-secondary mt-3">← Назад к маркам</a>
+{% endblock %}
