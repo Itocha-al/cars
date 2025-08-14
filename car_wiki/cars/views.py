@@ -1,8 +1,7 @@
-# cars/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib import messages  # ✅ Добавь этот импорт
+from django.contrib import messages
 from .forms import SignUpForm
 from django.shortcuts import get_object_or_404
 from .models import Brand, CarModel
