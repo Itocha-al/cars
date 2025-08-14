@@ -1,3 +1,4 @@
+# cars/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -18,3 +19,10 @@ class SignUpForm(UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Пользователь с такой электронной почтой уже существует.")
         return email
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
