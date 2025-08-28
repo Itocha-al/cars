@@ -8,32 +8,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Википедия культовых автомобилей</title>
 
+    <!-- bootstrap CSS -->
     {% bootstrap_css %}
+
+    <!-- кастомные стили -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
+    <!-- навбар -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'brand_list' %}">
-                🚗 Википедия культовых автомобилей
+            <!-- логотип / название -->
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'brand_list' %}">
+                🚗 <span class="ms-2">Википедия культовых автомобилей</span>
             </a>
 
-            <div class="navbar-nav ms-auto">
+            <!-- правая часть навбара -->
+            <div class="d-flex align-items-center">
                 {% if user.is_authenticated %}
-                    <span class="navbar-text me-3">Привет, {{ user.username }}!</span>
-                    <a href="{% url 'logout' %}" class="nav-link btn btn-outline-light btn-sm">Выход</a>
+                    <!-- выпадающее меню для авторизованного пользователя -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle btn-sm" type="button"
+                                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">👤 Профиль</a></li>
+                            <li><a class="dropdown-item" href="{% url 'password_change' %}">🔑 Сменить пароль</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">🚪 Выход</a></li>
+                        </ul>
+                    </div>
                 {% else %}
+                    <!-- кнопки Вход / Регистрация -->
                     <div class="d-flex gap-2">
-                        <a href="{% url 'login' %}" class="nav-link btn btn-outline-light btn-sm">Вход</a>
-                        <a href="{% url 'signup' %}" class="nav-link btn btn-light btn-sm">Регистрация</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm px-3">Вход</a>
+                        <a href="{% url 'signup' %}" class="btn btn-warning btn-sm text-white px-3">Регистрация</a>
                     </div>
                 {% endif %}
             </div>
         </div>
     </nav>
 
-    <!-- блок для сообщений -->
+    <!-- основное содержимое -->
     <div class="container">
+        <!-- сообщения -->
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -43,15 +62,18 @@
             {% endfor %}
         {% endif %}
 
-        <!-- основное содержимое -->
+        <!-- основной контент страницы -->
         {% block content %}{% endblock %}
     </div>
 
+    <!-- футер -->
+    <footer class="text-center py-4 text-muted border-top mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Википедия культовых автомобилей. Все права защищены.</p>
+        </div>
+    </footer>
+
     <!-- bootstrap JS -->
     {% bootstrap_javascript %}
-
-    <footer class="text-center mt-5 text-muted">
-        <p>&copy; 2025 Википедия культовых автомобилей. Все права защищены.</p>
-    </footer>
 </body>
 </html>

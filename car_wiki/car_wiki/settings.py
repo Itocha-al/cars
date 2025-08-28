@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cars',
+	'accounts',
     'django.contrib.humanize',
 	'django_bootstrap5',
 ]
@@ -135,3 +136,6 @@ STATICFILES_DIRS = [
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Для работы с файлами в режиме разработки
+DEBUG = True 

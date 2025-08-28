@@ -1,0 +1,44 @@
+{% extends "cars/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <div class="card mb-4 shadow-sm">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" class="card-img-top" alt="Аватар" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-muted">Нет аватара</span>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+    <h5 class="card-title">{{ user.username }}</h5>
+    <p class="card-text">
+        <strong>Email:</strong> {{ user.email }}<br>
+        <strong>Дата регистрации:</strong> {{ profile.date_joined|date:"d M Y" }}
+    </p>
+</div>
+
+<div class="text-center mt-3">
+    <a href="{% url 'profile_update' %}" class="btn btn-outline-primary btn-sm">Изменить аватар</a>
+</div>
+            </div>
+            <a href="{% url 'password_change' %}" class="btn btn-outline-primary w-100 mb-3">Изменить пароль</a>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4>Информация профиля</h4>
+                    <hr>
+                    <p><strong>Никнейм:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Дата регистрации:</strong> {{ profile.date_joined|date:"d M Y в H:i" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
