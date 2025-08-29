@@ -2,45 +2,74 @@
 {% load static %}
 
 {% block content %}
-<div class="container">
-    <h2 class="mb-4">{{ model.brand.name }} {{ model.name }} ({{ model.year_released }})</h2>
+<div class="row">
+    <div class="col-md-6">
+        {% if model.image %}
+            <img src="{{ model.image.url }}" alt="{{ model.name }}" class="img-fluid mb-3" style="max-height: 400px; object-fit: cover;">
+        {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                <small class="text-muted">Нет изображения</small>
+            </div>
+        {% endif %}
+    </div>
 
-    <!-- Контейнер для изображения и текста -->
-    <div class="row align-items-start">
-        <div class="col-md-6">
-            {% if model.image %}
-                <img src="{{ model.image.url }}" alt="{{ model.name }}" class="img-fluid mb-3" style="max-height: 400px; object-fit: cover;">
-            {% else %}
-                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
-                    <small class="text-muted">Нет изображения</small>
-                </div>
-            {% endif %}
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">История</h5>
+                <p class="card-text">{{ model.history }}</p>
+            </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">История</h5>
-                    <p class="card-text">{{ model.history }}</p>
-                </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Почему стал культовым</h5>
+                <p class="card-text">{{ model.why_cult }}</p>
             </div>
+        </div>
 
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Почему стал культовым</h5>
-                    <p class="card-text">{{ model.why_cult }}</p>
-                </div>
-            </div>
-
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Ценность</h5>
-                    <p class="card-text">{{ model.value }}</p>
-                </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Ценность</h5>
+                <p class="card-text">{{ model.value }}</p>
             </div>
         </div>
     </div>
-
-    <a href="{% url 'model_list' model.brand.id %}" class="btn btn-outline-secondary mt-3">← Назад к моделям {{ model.brand.name }}</a>
 </div>
+
+<!-- Форма комментария -->
+<div class="mt-5">
+    <h4>Комментарии</h4>
+
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.content }}
+            <button type="submit" class="btn btn-primary btn-sm mt-2">Отправить</button>
+        </form>
+    {% else %}
+        <p class="text-muted">Чтобы оставить комментарий, <a href="{% url 'login' %}">войдите</a> в аккаунт.</p>
+    {% endif %}
+</div>
+
+<!-- Список комментариев -->
+<div class="mt-4">
+    {% for comment in comments %}
+        <div class="card mb-3">
+            <div class="card-body p-3">
+                <strong>
+                    <a href="{% url 'profile' %}?user={{ comment.author.id }}" class="text-decoration-none">
+                        {{ comment.author.username }}
+                    </a>
+                </strong>
+                <small class="text-muted ms-2">{{ comment.created_at|date:"d M Y в H:i" }}</small>
+                <p class="mt-2 mb-0">{{ comment.content }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Пока нет комментариев. Будьте первым!</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'model_list' model.brand.id %}" class="btn btn-outline-secondary mt-3">← Назад к моделям {{ model.brand.name }}</a>
 {% endblock %}
