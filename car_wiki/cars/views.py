@@ -1,12 +1,12 @@
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Brand, CarModel
-from accounts.models import Comment
-from accounts.forms import CommentForm
+from accounts.forms import CommentForm, ModelSuggestionForm
+from accounts.models import Comment, ModelSuggestion
 
 
 class BrandListView(ListView):
@@ -25,7 +25,31 @@ class ModelListView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['models'] = self.object.models.all()
+
+        # Форма предложения
+        if self.request.user.is_authenticated:
+            context['suggestion_form'] = ModelSuggestionForm(
+                initial={'brand': self.object}
+            )
+        else:
+            context['suggestion_form'] = None
+
         return context
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, 'Чтобы предложить модель, войдите в аккаунт.')
+            return redirect('login')
+
+        form = ModelSuggestionForm(request.POST, request.FILES)
+        if form.is_valid():
+            suggestion = form.save(commit=False)
+            suggestion.suggested_by = request.user
+            suggestion.save()
+            messages.success(request, 'Спасибо! Ваша модель отправлена на рассмотрение.')
+        else:
+            messages.error(request, 'Проверьте данные формы.')
+        return redirect('model_list', brand_id=kwargs['brand_id'])
 
 
 class CarModelDetailView(DetailView):

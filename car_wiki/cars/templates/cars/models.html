@@ -30,8 +30,24 @@
             </div>
         </div>
     {% empty %}
-        <p>Модели пока не добавлены.</p>
+        <p class="text-center">Модели пока не добавлены.</p>
     {% endfor %}
+</div>
+
+<!-- Форма предложения новой модели -->
+<div class="mt-5 p-4 border rounded bg-light">
+    <h4>Не нашли модель?</h4>
+    <p>Предложите новую культовую модель — мы рассмотрим вашу заявку.</p>
+
+    {% if suggestion_form %}
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ suggestion_form.as_p }}
+            <button type="submit" class="btn btn-success">Отправить на рассмотрение</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Войдите</a>, чтобы предложить модель.</p>
+    {% endif %}
 </div>
 
 <a href="{% url 'brand_list' %}" class="btn btn-outline-secondary mt-3">← Назад к маркам</a>
