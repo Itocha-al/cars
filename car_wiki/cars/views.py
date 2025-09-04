@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomAuthenticationForm as AuthenticationForm
 from django.contrib import messages
 from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Brand, CarModel
+from .forms import SignUpForm
+from accounts.models import Comment
 from accounts.forms import CommentForm, ModelSuggestionForm
-from accounts.models import Comment, ModelSuggestion
 
 
 class BrandListView(ListView):

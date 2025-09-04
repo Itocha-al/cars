@@ -8,10 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Википедия культовых автомобилей</title>
 
-    <!-- bootstrap CSS -->
     {% bootstrap_css %}
-
-    <!-- кастомные стили -->
     <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 </head>
 <body>
@@ -19,9 +16,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container-fluid">
             <!-- логотип / название -->
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'brand_list' %}">
-                🚗 <span class="ms-2">Википедия культовых автомобилей</span>
-            </a>
+            <a class="navbar-brand d-flex align-items-center text-white" href="{% url 'brand_list' %}">
+    🚗<span class="ms-2 text-white">Википедия культовых автомобилей</span>
+			</a>
 
             <!-- правая часть навбара -->
             <div class="d-flex align-items-center">
@@ -42,8 +39,8 @@
                 {% else %}
                     <!-- кнопки Вход / Регистрация -->
                     <div class="d-flex gap-2">
-                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm px-3">Вход</a>
-                        <a href="{% url 'signup' %}" class="btn btn-warning btn-sm text-white px-3">Регистрация</a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-sm">Вход</a>
+						<a href="{% url 'signup' %}" class="btn btn-outline-light btn-sm text-dark">Регистрация</a>
                     </div>
                 {% endif %}
             </div>
@@ -73,7 +70,27 @@
         </div>
     </footer>
 
-    <!-- bootstrap JS -->
+  <!-- Bootstrap JS -->
     {% bootstrap_javascript %}
+
+    <!-- Скрипт плавных переходов -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.body.classList.add('fade-in');
+
+            const links = document.querySelectorAll('a[href]:not([href^="#"]):not([target="_blank"])');
+            links.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    if (e.ctrlKey || e.metaKey) return;
+                    e.preventDefault();
+                    document.body.classList.remove('fade-in');
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = this.getAttribute('href');
+                    }, 300);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

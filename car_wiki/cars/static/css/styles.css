@@ -1,60 +1,213 @@
+/* ========================================
+   Неоморфистский стиль (Neumorphism)
+   ======================================== */
+
+:root {
+    --bg: #ecf0f3;
+    --shadow-light: #ffffff;
+    --shadow-dark: #a3a7ad;
+    --accent: #6ab7ff;
+    --text: #444;
+    --radius: 16px;
+    --transition: all 0.2s ease;
+}
+
 body {
-    background-color: #f8f9fa;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 20px 10px;
+    min-height: 100vh;
 }
 
-.navbar {
-    font-weight: bold;
-}
-
-h1 {
-    margin-top: 20px;
-}
-
-
-/* Улучшение дизайна карточек */
+/* === Неоморфистские карточки === */
 .card {
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Скрывает лишние части изображения */
+    background: var(--bg);
+    border-radius: var(--radius);
+    box-shadow: 
+        8px 8px 16px var(--shadow-dark),
+        -8px -8px 16px var(--shadow-light);
+    transition: var(--transition);
+    overflow: hidden;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light);
 }
 
 .card-img-top {
-    transition: transform 0.3s ease; /* Анимация при наведении */
-}
-
-.card:hover .card-img-top {
-    transform: scale(1.1); /* Увеличиваем изображение при наведении */
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #dde1e7;
 }
 
 .card-body {
-    padding: 1rem;
+    padding: 1.5rem;
 }
 
 .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
 }
 
 .card-text {
-    color: #6c757d;
+    color: #666;
+    font-size: 0.95rem;
 }
 
-.card-link {
-    display: block;
-    margin-top: 10px;
+/* === Контейнеры и секции === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
-footer {
-    margin-top: 40px;
-    text-align: center;
-    color: #6c757d;
+/* === Навбар (неоморфизм) === */
+.navbar {
+    background: var(--bg);
+    box-shadow: 
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light);
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
 }
 
-.brand-logo {
-    max-height: 80px;
-    object-fit: contain;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    margin: 10px 0;
+.navbar-brand {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text) !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* === КНОПКИ === */
+.btn {
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--bg);
+    box-shadow: 
+        inset 4px 4px 8px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light);
+    color: var(--text);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 3px 3px 6px var(--shadow-dark),
+        inset -3px -3px 6px var(--shadow-light);
+}
+
+.btn-outline-dark {
+    background: var(--bg);
+    color: #000;
+    box-shadow: 
+        inset 4px 4px 8px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light);
+}
+
+.btn-outline-dark:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        inset 3px 3px 6px var(--shadow-dark),
+        inset -3px -3px 6px var(--shadow-light);
+    background: #000;
+    color: white;
+}
+
+/* === Формы (регистрация, вход) === */
+.form-control {
+    background: var(--bg);
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    box-shadow: 
+        inset 4px 4px 8px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light);
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    box-shadow: 
+        inset 3px 3px 6px var(--shadow-dark),
+        inset -3px -3px 6px var(--shadow-light),
+        0 0 0 0.2rem rgba(106, 183, 255, 0.25);
+}
+
+.form-text {
+    color: #777;
+    font-size: 0.85rem;
+}
+
+/* === Сообщения === */
+.alert {
+    border-radius: var(--radius);
+    background: var(--bg);
+    box-shadow: 
+        4px 4px 8px var(--shadow-dark),
+        -4px -4px 8px var(--shadow-light);
+    border: none;
+}
+
+.alert-success {
+    color: #28a745;
+}
+
+.alert-danger {
+    color: #dc3545;
+}
+
+/* === Заголовки === */
+h2, h3, h4 {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* === Неоморфистская форма предложения === */
+.suggestion-form {
+    background: var(--bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: 
+        6px 6px 12px var(--shadow-dark),
+        -6px -6px 12px var(--shadow-light);
+    margin: 30px 0;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 1rem;
+    }
+
+    .card {
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
